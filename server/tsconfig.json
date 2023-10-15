@@ -6,7 +6,11 @@
 		"module": "esnext",
 		"moduleResolution": "bundler",
 
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
+
+		"types": [
+			"@cloudflare/workers-types"
+		]
 	},
 	"include": [
 		"src"

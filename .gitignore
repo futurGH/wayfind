@@ -28,3 +28,4 @@ scripts/transformed/
 
 .env
 .env.*
+.dev.vars

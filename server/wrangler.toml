@@ -1,0 +1,11 @@
+name = "guaidance"
+main = "src/index.ts"
+compatibility_date = "2023-10-15"
+
+[[vectorize]]
+binding = "COURSES_INDEX"
+index_name = "guaidance-courses"
+
+[[vectorize]]
+binding = "PROGRAMS_INDEX"
+index_name = "guaidance-programs"
