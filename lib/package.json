@@ -1,0 +1,14 @@
+{
+	"name": "@guaidance/lib",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "tsc"
+	},
+	"exports": {
+		"./*": "./dist/*.js"
+	},
+	"devDependencies": {
+		"@types/node": "^20.8.4"
+	}
+}
