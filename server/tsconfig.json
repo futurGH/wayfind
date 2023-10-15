@@ -1,0 +1,15 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"target": "esnext",
+		"lib": ["esnext"],
+		"module": "esnext",
+		"moduleResolution": "bundler",
+
+		"allowSyntheticDefaultImports": true
+	},
+	"include": [
+		"src"
+	],
+	"exclude": ["node_modules", "dist"]
+}
