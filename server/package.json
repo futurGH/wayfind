@@ -1,5 +1,5 @@
 {
-	"name": "@guaidance/server",
+	"name": "@wayfind/server",
 	"private": true,
 	"dependencies": {
 		"hono": "^3.7.6"

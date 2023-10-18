@@ -1,5 +1,5 @@
 {
-	"name": "@guaidance/lib",
+	"name": "@wayfind/lib",
 	"type": "module",
 	"private": true,
 	"scripts": {

@@ -1,7 +1,7 @@
 import { configDotenv } from "dotenv";
 import fs from "node:fs/promises";
 import { sleep } from "openai/core";
-import { generateSummary, validateEnv } from "./common";
+import { generateSummary, validateEnv } from "../common";
 
 configDotenv();
 

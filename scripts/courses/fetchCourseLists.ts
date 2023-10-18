@@ -1,7 +1,7 @@
 import { configDotenv } from "dotenv";
 import fs from "node:fs/promises";
 import { fetch } from "undici";
-import { validateEnv } from "../summaries/common";
+import { validateEnv } from "../common";
 
 configDotenv();
 

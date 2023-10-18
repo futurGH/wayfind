@@ -1,4 +1,4 @@
-import { pick } from "@guaidance/lib/object";
+import { pick } from "@wayfind/lib/object";
 import { HuggingFaceTransformersEmbeddings } from "langchain/embeddings/hf_transformers";
 import fs from "node:fs/promises";
 

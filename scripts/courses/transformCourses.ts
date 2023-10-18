@@ -1,4 +1,4 @@
-import { looseIncludes } from "@guaidance/lib/string";
+import { looseIncludes } from "@wayfind/lib/string";
 import * as fs from "node:fs/promises";
 
 type Course = CoursesJson["courses"][number];

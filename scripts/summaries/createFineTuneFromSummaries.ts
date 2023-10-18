@@ -30,7 +30,7 @@ if (existingJob) {
 const fineTune = await openai.fineTuning.jobs.create({
 	training_file: file.id,
 	model: "gpt-3.5-turbo",
-	suffix: "guaidance-summary",
+	suffix: "wayfind-summary",
 });
 
 console.log("Fine tune job started");

@@ -1,8 +1,8 @@
-import { nRandom } from "@guaidance/lib/number";
 import { editor, expand } from "@inquirer/prompts";
+import { nRandom } from "@wayfind/lib/number";
 import { configDotenv } from "dotenv";
 import fs from "node:fs/promises";
-import { browser, generateSummary } from "./common";
+import { browser, generateSummary } from "../common";
 
 configDotenv();
 

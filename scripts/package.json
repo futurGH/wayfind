@@ -1,5 +1,5 @@
 {
-	"name": "@guaidance/scripts",
+	"name": "@wayfind/scripts",
 	"type": "module",
 	"private": true,
 	"scripts": {
@@ -12,7 +12,7 @@
 		"wrangler": "^3.13.1"
 	},
 	"dependencies": {
-		"@guaidance/lib": "workspace:^",
+		"@wayfind/lib": "workspace:^",
 		"@inquirer/confirm": "^2.0.14",
 		"@inquirer/prompts": "^3.2.0",
 		"@sinclair/typebox": "^0.31.17",

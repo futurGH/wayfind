@@ -43,7 +43,7 @@ importers:
 
   scripts:
     dependencies:
-      '@guaidance/lib':
+      '@wayfind/lib':
         specifier: workspace:^
         version: link:../lib
       '@inquirer/confirm':

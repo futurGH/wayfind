@@ -1,5 +1,5 @@
-import { pickRemap } from "@guaidance/lib/object";
-import { sleep } from "@guaidance/lib/util";
+import { pickRemap } from "@wayfind/lib/object";
+import { sleep } from "@wayfind/lib/util";
 import { JSDOM } from "jsdom";
 import fs from "node:fs/promises";
 import { fetch, FormData } from "undici";

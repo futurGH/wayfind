@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
-import { browser } from "./common";
-import { getWebsiteBody, userMessage } from "./common";
+import { browser } from "../common";
+import { getWebsiteBody, userMessage } from "../common";
 
 const summaryFiles = await fs.readdir("./data/summaries");
 const programs = await Promise.all(summaryFiles.map(async (file) => {

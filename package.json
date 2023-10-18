@@ -1,5 +1,5 @@
 {
-	"name": "guaidance",
+	"name": "wayfind",
 	"private": true,
 	"devDependencies": {
 		"@types/eslint": "^8.44.3",
