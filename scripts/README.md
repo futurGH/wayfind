@@ -16,7 +16,7 @@
   - writes to `data/programs/*.program.json`
 
 
-- ### Fine Tuning
+- ### Fine-Tuning
   - `summaries/generateFineTuneSummaries.ts` to generate GPT-4 summaries for randomly selected programs in order to fine-tune gpt-3.5-turbo
     - requires `process.env.OPENAI_KEY`
     - writes to `data/summaries/*.summary.txt`
@@ -31,3 +31,14 @@
 
 - `embeddings/generateProgramEmbeddings.ts` to generate university program embeddings
   - writes to `transformed/embeddings/programs/programs.embeddings.ndjson`
+
+## note on fine-tuning
+
+GPT-4 would be too expensive for generating summaries (estimate $90 at $0.02/1k tokens). GPT-3.5 does not do well with a one-shot summary prompt where it needs to draw data from both the JSON and the website. Asking it to e.g. first generate a summary of each then combine them is:
+
+- expensive (may change with stateful API)
+- unreliable (it still didn't correctly format the summaries >50% of the time, so extraction would end up being a manual process)
+
+As a result, fine-tuned GPT-3.5 was the most viable option for generating summaries of all ~1.4k university programs in Ontario to provide to the application as embeddings. 
+
+The fine-tuning itself cost just over $3 at $0.008 per 1k tokens, and generating all the summaries was about $30 ($0.012/1k input, $0.016/1k output tokens).
