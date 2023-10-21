@@ -8,9 +8,18 @@
 		"quoteProps": "asNeeded"
 	},
 	"json": {},
-	"includes": ["**/*.{ts,tsx,cjs,json}"],
+	"exec": {
+		"associations": "**/*.{tsx,html}",
+		"commands": [{
+			"command": "pnpm prettier --stdin-filepath {{file_path}} --tab-width {{indent_width}} --print-width {{line_width}} --config-precedence prefer-file --plugin=prettier-plugin-tailwindcss",
+			"exts": ["tsx", "html"],
+			"associations": "**/*.{tsx,html}"
+		}]
+	},
+	"includes": ["**/*.{ts,tsx,cjs,mjs,js,json}"],
 	"plugins": [
 		"https://plugins.dprint.dev/typescript-0.88.1.wasm",
-		"https://plugins.dprint.dev/json-0.17.4.wasm"
+		"https://plugins.dprint.dev/json-0.17.4.wasm",
+		"https://plugins.dprint.dev/exec-0.4.3.json@42343548b8022c99b1d750be6b894fe6b6c7ee25f72ae9f9082226dd2e515072"
 	]
 }
