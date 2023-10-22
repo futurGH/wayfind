@@ -3,7 +3,11 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"x": "tsx"
+		"x": "tsx",
+		"create-index": "wrangler vectorize create --preset=@cf/baai/bge-base-en-v1.5",
+		"delete-index": "wrangler vectorize delete",
+		"insert-courses": "for file in transformed/embeddings/courses/*.ndjson; do (wrangler vectorize insert wayfind-courses --file=$(realpath $file)); done",
+		"insert-programs": "wrangler vectorize insert wayfind-programs --file=$(realpath transformed/embeddings/programs/programs.embeddings.ndjson)"
 	},
 	"devDependencies": {
 		"@types/jsdom": "^21.1.3",
