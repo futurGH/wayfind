@@ -2,7 +2,9 @@
 	"name": "@wayfind/server",
 	"private": true,
 	"dependencies": {
-		"hono": "^3.7.6"
+		"@sinclair/typebox": "^0.31.17",
+		"hono": "^3.8.3",
+		"langchain": "^0.0.165"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20231010.0",
