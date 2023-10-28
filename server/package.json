@@ -1,10 +1,13 @@
 {
 	"name": "@wayfind/server",
 	"private": true,
+	"type": "module",
 	"dependencies": {
+		"@cloudflare/ai": "^1.0.22",
 		"@sinclair/typebox": "^0.31.17",
+		"@xata.io/client": "^0.26.9",
 		"hono": "^3.8.3",
-		"langchain": "^0.0.165"
+		"langchain": "^0.0.175"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20231010.0",
