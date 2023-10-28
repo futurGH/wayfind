@@ -29,7 +29,10 @@ for (const summaryPath of programSummaries) {
 
 	const summary = await fs.readFile(`./transformed/summaries/${summaryPath}`, "utf-8");
 
-	const metadata = pick(programInfo, "university", "name", "ouacCode", "degree");
+	const metadata = {
+		...pick(programInfo, "university", "name", "ouacCode", "degree"),
+		text: summary,
+	};
 
 	const embeddingValues = (await embeddingsModel.embedDocuments([summary]))[0];
 	const programEmbedding: EmbeddingsLine = {

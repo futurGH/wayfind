@@ -5,6 +5,7 @@ interface EmbeddingsLine {
 	id: string;
 	values: Array<number>;
 	metadata: Record<string, string | number>;
+	namespace: string;
 }
 
 const schools = await fs.readdir("./transformed/schools");
@@ -31,6 +32,7 @@ for (const school of schoolFiles) {
 		id: `school-${schoolMetadata.id}`,
 		values: schoolEmbeddingValues,
 		metadata: { schoolId: schoolMetadata.id, schoolName: schoolMetadata.name },
+		namespace: schoolMetadata.name,
 	};
 	embeddings.push(JSON.stringify(schoolEmbedding));
 
@@ -38,14 +40,20 @@ for (const school of schoolFiles) {
 		const { description: courseDescription, ...courseMetadata } = course;
 		const courseEmbeddingValues =
 			(await embeddingsModel.embedDocuments([courseDescription]))[0];
+		const courseCode = courseMetadata.courseCode.slice(0, 5);
 		const courseEmbedding: EmbeddingsLine = {
 			id: `${schoolMetadata.id}-course-${courseMetadata.courseCode}`,
 			values: courseEmbeddingValues,
 			metadata: {
-				...courseMetadata,
+				name: courseMetadata.name,
+				grade: courseMetadata.grade,
+				fullCourseCode: courseMetadata.courseCode,
+				courseCode,
 				schoolId: schoolMetadata.id,
 				schoolName: schoolMetadata.name,
+				text: courseDescription,
 			},
+			namespace: schoolMetadata.name,
 		};
 		embeddings.push(JSON.stringify(courseEmbedding));
 	}
