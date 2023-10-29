@@ -1,3 +1,112 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+	height: 100vh;
+	max-height: -webkit-fill-available;
+}
+
+body.dark {
+	@apply bg-stone-900;
+}
+
+@keyframes slide-down {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes slide-up {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes hide {
+	0% {
+		opacity: 1;
+		display: block;
+		transform: translateY(0);
+	}
+	99% {
+		display: block;
+		transform: translateY(-20%);
+	}
+	100% {
+		opacity: 0;
+		display: none;
+		height: 0;
+		min-height: 0;
+	}
+}
+
+@keyframes show {
+	0% {
+		opacity: 0;
+		display: none;
+	}
+	1% {
+		display: block;
+	}
+	100% {
+		opacity: 1;
+		display: block;
+	}
+}
+
+.hide {
+	animation: hide 110ms cubic-bezier(0.4, 0, 0.2, 1);
+	-webkit-animation-name: hide;
+	-webkit-animation-duration: 110ms;
+	-webkit-animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+.show {
+	animation: show 250ms cubic-bezier(0.4, 0, 0.2, 1);
+	animation-fill-mode: forwards;
+}
+
+.h-screen-fixed {
+	height: 100vh;
+	height: -webkit-fill-available;
+}
+
+.fade-out-up {
+	--mask: linear-gradient(
+		to bottom,
+		rgb(255, 255, 255, 1) 0%,
+		rgb(255, 255, 255, 0) 10%
+	);
+}
+
+.fade-out-up {
+	--mask: linear-gradient(
+			to bottom,
+			theme(colors.transparent) 0%,
+			theme(colors.white) 5%,
+			theme(colors.white) 100%
+	);
+	-webkit-mask: var(--mask);
+	mask: var(--mask);
+}
+.dark .fade-out-up {
+	--mask: linear-gradient(
+			to bottom,
+			theme(colors.transparent) 0%,
+			theme(colors.stone[900]) 5%,
+			theme(colors.stone[900]) 97%,
+			theme(colors.transparent) 100%
+	);
+}
