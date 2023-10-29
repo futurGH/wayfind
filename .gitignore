@@ -31,3 +31,6 @@ scripts/transformed/
 .dev.vars
 
 wrangler.toml
+.xatarc
+xata.ts
+.xata
