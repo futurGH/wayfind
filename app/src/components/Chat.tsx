@@ -128,13 +128,13 @@ export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 			if (e instanceof Response) {
 				if (e.status === 429) {
 					const body = await e.json();
-					const distance = formatDistance(body.remaining, Date.now());
+					const distance = formatDistance(body.remaining || 0, Date.now());
 					dispatchMessage({
 						type: "set",
 						message: {
 							from: "ai",
-							text: "Sorry, I'm not made of cash! You'll have to try again in "
-								+ distance + ".",
+							text: "Sorry, I'm not made of cash! You'll have to try again "
+								+ (body.remaining ? "in " + distance : "later") + ".",
 							error: true,
 						},
 					});
