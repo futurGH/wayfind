@@ -23,7 +23,7 @@ const formatMessage = (message: Message): Message => ({
 	...message,
 	text: message.text.replace(/\r\n|\r|\n/g, "<br />").replace(
 		/\[(?<text>.+?)\]\((?<link>.+?)\)/g,
-		`<a href="$<link>">$<text></a>`,
+		`<a href="$<link>" class="text-underline">$<text></a>`,
 	),
 });
 
