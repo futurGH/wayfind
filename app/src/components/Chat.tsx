@@ -3,9 +3,9 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { formatDistance } from "date-fns";
 import { FormEvent, useReducer, useRef, useState } from "react";
-import ScrollableFeed from "react-scrollable-feed";
-import { Compass } from "../assets/Compass.tsx";
+import { Compass } from "../assets/Compass";
 import { cn } from "../lib/util";
+import ScrollableFeed from "../vendor/react-scrollable-feed";
 import { Button } from "./elements/Button";
 import { Textarea } from "./elements/Textarea";
 
