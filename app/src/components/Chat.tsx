@@ -55,6 +55,7 @@ const MessagesPlaceholder = () => {
 export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 	async function handleSend(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+		if (isStreaming) return;
 
 		const formData = new FormData(e.currentTarget);
 		formData.set("schoolName", schoolName);
