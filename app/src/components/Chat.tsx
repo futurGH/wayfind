@@ -266,7 +266,7 @@ export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 					handleSend(e).catch(() => {});
 				}}
 				onKeyDown={(e) => {
-					if (e.key === "Enter") {
+					if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
 						if (!input.trim().length) return;
 						e.preventDefault();
 						formRef.current?.requestSubmit();
