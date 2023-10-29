@@ -155,9 +155,8 @@ class ScrollableFeed extends React.Component<ScrollableFeedProps> {
 
 	render(): React.ReactNode {
 		const { children, className } = this.props;
-		const joinedClassName = styles.scrollableDiv + (className ? " " + className : "");
 		return (
-			<div className={joinedClassName} ref={this.wrapperRef} onScroll={this.handleScroll}>
+			<div className={className} ref={this.wrapperRef} onScroll={this.handleScroll}>
 				{children}
 				<div ref={this.bottomRef}></div>
 			</div>
