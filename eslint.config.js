@@ -17,8 +17,17 @@ const linterOptions = { reportUnusedDisableDirectives: true };
 /** @type { import("eslint").Linter.FlatConfig[] } */
 const config = [{
 	files: ["app/**/*.{ts,tsx}"],
+	ignores: ["app/*.config.ts"],
 	plugins,
-	rules,
+	rules: {
+		...rules,
+		"@typescript-eslint/no-unnecessary-condition": "warn",
+		"@typescript-eslint/no-unsafe-assignment": "off",
+		"@typescript-eslint/no-unsafe-member-access": "off",
+		"@typescript-eslint/no-unsafe-argument": "off",
+		"@typescript-eslint/no-throw-literal": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
+	},
 	linterOptions,
 	languageOptions: {
 		parser,
@@ -45,7 +54,6 @@ const config = [{
 		parserOptions: { project: "./scripts/tsconfig.json" },
 		globals: globals.node,
 	},
-	env: { es2022: true },
 }, {
 	files: ["lib/**/*.{ts,tsx}"],
 	plugins,
