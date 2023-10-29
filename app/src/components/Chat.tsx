@@ -260,14 +260,14 @@ export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 			</Transition>
 			<form
 				ref={formRef}
-				className={"inline-flex gap-1.5 items-end w-full"}
+				className="inline-flex gap-1.5 items-end w-full"
 				onSubmit={(e) => {
 					setIsLoading(true);
+					if (!input.trim().length) return;
 					handleSend(e).catch(() => {});
 				}}
 				onKeyDown={(e) => {
 					if (e.key === "Enter" && !e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
-						if (!input.trim().length) return;
 						e.preventDefault();
 						formRef.current?.requestSubmit();
 					}
