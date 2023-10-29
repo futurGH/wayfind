@@ -1,5 +1,4 @@
 import { Transition } from "@headlessui/react";
-import { schools } from "@wayfind/lib/schools";
 import { useEffect, useState } from "react";
 import { useResponsiveness } from "react-responsiveness";
 import { Logo } from "./assets/logo";
@@ -8,6 +7,7 @@ import { ComboboxDemo as Combobox } from "./components/elements/Combobox";
 import { Header } from "./components/Header";
 import { useQueryParams } from "./lib/useQueryParams";
 import { cn } from "./lib/util";
+import { schools } from "./schools";
 
 const schoolList = schools.map((school) => ({
 	value: school.name.toLowerCase(),
