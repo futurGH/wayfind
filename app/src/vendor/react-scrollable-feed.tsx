@@ -51,7 +51,7 @@ class ScrollableFeed extends React.Component<ScrollableFeedProps> {
 		onScroll: () => {},
 	};
 
-	getSnapshotBeforeUpdate(): boolean {
+	override getSnapshotBeforeUpdate(): boolean {
 		if (this.wrapperRef.current && this.bottomRef.current) {
 			const { viewableDetectionEpsilon } = this.props;
 			return ScrollableFeed.isViewable(
@@ -63,9 +63,9 @@ class ScrollableFeed extends React.Component<ScrollableFeedProps> {
 		return false;
 	}
 
-	componentDidUpdate(
+	override componentDidUpdate(
 		previousProps: ScrollableFeedComponentProps,
-		{}: any,
+		_: unknown,
 		snapshot: boolean,
 	): void {
 		const { forceScroll, changeDetectionFilter } = this.props;
@@ -78,7 +78,7 @@ class ScrollableFeed extends React.Component<ScrollableFeedProps> {
 		}
 	}
 
-	componentDidMount(): void {
+	override componentDidMount(): void {
 		// Scroll to bottom from the start
 		if (this.bottomRef.current && this.wrapperRef.current) {
 			this.scrollParentToChild(this.wrapperRef.current, this.bottomRef.current);
@@ -153,7 +153,7 @@ class ScrollableFeed extends React.Component<ScrollableFeedProps> {
 		}
 	}
 
-	render(): React.ReactNode {
+	override render(): React.ReactNode {
 		const { children, className } = this.props;
 		return (
 			<div className={className} ref={this.wrapperRef} onScroll={this.handleScroll}>
