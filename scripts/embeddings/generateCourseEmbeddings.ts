@@ -1,12 +1,10 @@
+import { configDotenv } from "dotenv";
 import { HuggingFaceTransformersEmbeddings } from "langchain/embeddings/hf_transformers";
 import fs from "node:fs/promises";
+import { removeNonUtf8 } from "../common";
+import { Courses as XataCourse, getXataClient } from "../xata";
 
-interface EmbeddingsLine {
-	id: string;
-	values: Array<number>;
-	metadata: Record<string, string | number>;
-	namespace: string;
-}
+configDotenv();
 
 const schools = await fs.readdir("./transformed/schools");
 const schoolFiles = await Promise.all(
@@ -21,45 +19,37 @@ const embeddingsModel = new HuggingFaceTransformersEmbeddings({
 	modelName: "Xenova/bge-base-en-v1.5",
 });
 
-await fs.mkdir("./transformed/embeddings/courses", { recursive: true });
+const xata = getXataClient();
 
 for (const school of schoolFiles) {
-	const embeddings: Array<string> = [];
+	const embeddings: Array<XataCourse> = [];
 
-	const { description: schoolDescription, courses, ...schoolMetadata } = school;
-	const schoolEmbeddingValues = (await embeddingsModel.embedDocuments([schoolDescription]))[0];
-	const schoolEmbedding: EmbeddingsLine = {
-		id: `school-${schoolMetadata.id}`,
-		values: schoolEmbeddingValues,
-		metadata: { schoolId: schoolMetadata.id, schoolName: schoolMetadata.name },
-		namespace: schoolMetadata.name,
-	};
-	embeddings.push(JSON.stringify(schoolEmbedding));
+	const { courses, ...schoolMetadata } = school;
 
 	for (const course of courses) {
-		const { description: courseDescription, ...courseMetadata } = course;
+		const { description: courseDescription, courseCode: fullCourseCode, ...courseMetadata } =
+			course;
 		const courseEmbeddingValues =
 			(await embeddingsModel.embedDocuments([courseDescription]))[0];
-		const courseCode = courseMetadata.courseCode.slice(0, 5);
-		const courseEmbedding: EmbeddingsLine = {
-			id: `${schoolMetadata.id}-course-${courseMetadata.courseCode}`,
-			values: courseEmbeddingValues,
-			metadata: {
-				name: courseMetadata.name,
-				grade: courseMetadata.grade,
-				fullCourseCode: courseMetadata.courseCode,
-				courseCode,
-				schoolId: schoolMetadata.id,
-				schoolName: schoolMetadata.name,
-				text: courseDescription,
-			},
-			namespace: schoolMetadata.name,
+		const courseCode = fullCourseCode.slice(0, 5);
+		const id = `${schoolMetadata.id}-course-${fullCourseCode}`.replace(
+			/[^a-zA-Z0-9\-_:~]/g,
+			"",
+		);
+		const courseRecord = {
+			id,
+			content: removeNonUtf8(courseDescription),
+			embedding: courseEmbeddingValues,
+			name: courseMetadata.name,
+			grade: courseMetadata.grade,
+			courseCode,
+			fullCourseCode,
+			schoolName: schoolMetadata.name,
 		};
-		embeddings.push(JSON.stringify(courseEmbedding));
+		embeddings.push(courseRecord);
 	}
 
-	await fs.writeFile(
-		`./transformed/embeddings/courses/${schoolMetadata.id}.embeddings.ndjson`,
-		embeddings.join("\n"),
-	);
+	await xata.db.courses.createOrUpdate(embeddings).catch((e) => {
+		console.error(school.id, school.name, e);
+	});
 }

@@ -8,7 +8,7 @@
 - `courses/transformCourses.ts` to extract relevant course data and write summaries
   - writes to `transformed/schools/*.school.json`
 - `embeddings/generateCourseEmbeddings.ts` to generate course embeddings
-  - writes to `transformed/embeddings/courses/*.embeddings.ndjson`
+  - requires `process.env.XATA_API_KEY`
 
 ## University Programs
 
@@ -30,7 +30,7 @@
 
 
 - `embeddings/generateProgramEmbeddings.ts` to generate university program embeddings
-  - writes to `transformed/embeddings/programs/programs.embeddings.ndjson`
+  - requires `process.env.XATA_API_KEY`
 
 ## note on fine-tuning
 

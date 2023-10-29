@@ -37,7 +37,7 @@ export async function getWebsiteBody(url: string) {
 	const websiteBody = await page.evaluate(() => {
 		const body = document.querySelector("body");
 		if (!body) return null;
-		return body.innerText?.trim();
+		return body.innerText.trim();
 	});
 	if (!websiteBody) return null;
 
@@ -75,6 +75,10 @@ export async function generateSummary(_program: ProgramJson, modelName: string) 
 
 	const output = await openai.predictMessages([prompt, user]);
 	return output.content;
+}
+
+export function removeNonUtf8(str: string) {
+	return str.replace(/[–—]/g, "-").replace(/[^\x00-\x7F]/g, "");
 }
 
 export function validateEnv(name: string) {

@@ -1,12 +1,13 @@
 import { pick } from "@wayfind/lib/object";
+import { configDotenv } from "dotenv";
 import { HuggingFaceTransformersEmbeddings } from "langchain/embeddings/hf_transformers";
 import fs from "node:fs/promises";
+import { removeNonUtf8 } from "../common";
+import { getXataClient, Programs as XataProgram } from "../xata";
 
-interface EmbeddingsLine {
-	id: string;
-	values: Array<number>;
-	metadata: Record<string, string | number>;
-}
+configDotenv();
+
+const xata = getXataClient();
 
 const programSummaries = await fs.readdir("./transformed/summaries");
 
@@ -14,9 +15,7 @@ const embeddingsModel = new HuggingFaceTransformersEmbeddings({
 	modelName: "Xenova/bge-base-en-v1.5",
 });
 
-await fs.mkdir("./transformed/embeddings/programs", { recursive: true });
-
-const embeddings: Array<string> = [];
+const embeddings: Array<XataProgram> = [];
 
 for (const summaryPath of programSummaries) {
 	const programId = summaryPath.split(".")[0];
@@ -29,21 +28,14 @@ for (const summaryPath of programSummaries) {
 
 	const summary = await fs.readFile(`./transformed/summaries/${summaryPath}`, "utf-8");
 
-	const metadata = {
-		...pick(programInfo, "university", "name", "ouacCode", "degree"),
-		text: summary,
-	};
-
 	const embeddingValues = (await embeddingsModel.embedDocuments([summary]))[0];
-	const programEmbedding: EmbeddingsLine = {
+	const programEmbedding = {
 		id: `program-${programId}`,
-		values: embeddingValues,
-		metadata,
+		content: removeNonUtf8(summary),
+		embedding: embeddingValues,
+		...pick(programInfo, "university", "name", "ouacCode"),
 	};
-	embeddings.push(JSON.stringify(programEmbedding));
+	embeddings.push(programEmbedding);
 }
 
-await fs.writeFile(
-	`./transformed/embeddings/programs/programs.embeddings.ndjson`,
-	embeddings.join("\n"),
-);
+await xata.db.programs.createOrReplace(embeddings);
