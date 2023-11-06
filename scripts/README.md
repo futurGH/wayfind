@@ -42,3 +42,5 @@ GPT-4 would be too expensive for generating summaries (estimate $90 at $0.02/1k 
 As a result, fine-tuned GPT-3.5 was the most viable option for generating summaries of all ~1.4k university programs in Ontario to provide to the application as embeddings. 
 
 The fine-tuning itself cost just over $3 at $0.008 per 1k tokens, and generating all the summaries was about $30 ($0.012/1k input, $0.016/1k output tokens).
+
+UPDATE: as of Dev Day 2023, it would be more cost-effective to just use gpt-4-turbo at $0.01/1k tokens — would need to look into whether it performs better at summarization than fine-tuned gpt-3.5-turbo; would assume so.

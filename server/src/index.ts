@@ -86,8 +86,7 @@ app.post(
 
 		const llm = new ChatOpenAI({
 			openAIApiKey: c.env.OPENAI_KEY,
-			modelName: "gpt-4",
-			temperature: 0.9,
+			modelName: "gpt-4-1106-preview",
 			streaming: true,
 			verbose: true,
 		});
