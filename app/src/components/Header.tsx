@@ -26,7 +26,7 @@ export function Header() {
 			</a>
 			<Divider />
 			<a
-				href="https://todo"
+				href="https://github.com/futurGH/wayfind"
 				className="flex justify-center items-center w-8 h-8 hover:text-sienna hover:dark:text-stone-500"
 			>
 				<GitHubLogoIcon className="w-6 h-6 sm:w-5 sm:h-5" />
