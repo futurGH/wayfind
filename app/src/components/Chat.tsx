@@ -185,7 +185,9 @@ export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 						state.push(lastMessage);
 					}
 					const newText = lastMessage.text + action.token;
-					return state.slice(0, -1).concat({ ...lastMessage, text: newText });
+					return state.slice(0, -1).concat(
+						formatMessage({ ...lastMessage, text: newText }),
+					);
 				case "set":
 					return state.slice(0, -1).concat(formatMessage(action.message));
 				default:
