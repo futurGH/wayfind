@@ -86,7 +86,7 @@ app.post(
 
 		const llm = new ChatOpenAI({
 			openAIApiKey: c.env.OPENAI_KEY,
-			modelName: "gpt-4-1106-preview",
+			modelName: "gpt-4-turbo-preview",
 			streaming: true,
 			verbose: true,
 		});
