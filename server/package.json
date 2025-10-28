@@ -4,13 +4,17 @@
 	"type": "module",
 	"dependencies": {
 		"@cloudflare/ai": "^1.0.22",
+		"@langchain/cloudflare": "^1.0.0",
+		"@langchain/community": "^0.3.57",
+		"@langchain/core": "^0.3.57",
+		"@langchain/openai": "^0.6.16",
 		"@sinclair/typebox": "^0.31.17",
 		"@xata.io/client": "^0.26.9",
-		"hono": "^3.8.3",
-		"langchain": "^0.0.175"
+		"hono": "^4.10.3",
+		"langchain": "^0.3.36"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240117.0",
-		"wrangler": "^3.13.1"
+		"wrangler": "^4.45.0"
 	}
 }

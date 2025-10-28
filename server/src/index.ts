@@ -7,13 +7,12 @@ import { cors } from "hono/cors";
 import { streamSSE } from "hono/streaming";
 import { validator } from "hono/validator";
 import { initializeAgentExecutorWithOptions } from "langchain/agents";
-import { ChatOpenAI } from "langchain/chat_models/openai";
-import { CloudflareWorkersAIEmbeddings } from "langchain/embeddings/cloudflare_workersai";
+import { ChatOpenAI } from "@langchain/openai";
+import { CloudflareWorkersAIEmbeddings } from "@langchain/cloudflare";
 import { BufferMemory } from "langchain/memory";
-import { XataChatMessageHistory } from "langchain/stores/message/xata";
+import { XataChatMessageHistory } from "@langchain/community/stores/message/xata";
 import { DynamicTool } from "langchain/tools";
-import { formatDocumentsAsString } from "langchain/util/document";
-import { XataVectorSearch } from "langchain/vectorstores/xata";
+import { XataVectorSearch } from "@langchain/community/vectorstores/xata";
 
 export type Env = {
 	DB: D1Database;
@@ -62,6 +61,7 @@ app.post(
 			modelName: "@cf/baai/bge-base-en-v1.5",
 		});
 
+
 		const xata = new XataClient({
 			apiKey: c.env.XATA_API_KEY,
 			databaseURL: c.env.XATA_DB_URL,
@@ -86,7 +86,8 @@ app.post(
 
 		const llm = new ChatOpenAI({
 			openAIApiKey: c.env.OPENAI_KEY,
-			modelName: "gpt-4-turbo-preview",
+			modelName: "gpt-5",
+			reasoning: { effort: "minimal", summary: null },
 			streaming: true,
 			verbose: true,
 		});
@@ -96,11 +97,11 @@ app.post(
 			name: "search_courses",
 			description: `Useful for information on courses at ${schoolName}.`,
 			func: async (input, runManager) => {
-				const docs = await coursesRetriever.getRelevantDocuments(
+				const docs = await coursesRetriever.invoke(
 					input,
 					runManager?.getChild("retriever"),
 				);
-				return formatDocumentsAsString(docs, "\n");
+				return docs.map(doc => doc.pageContent).join("\n\n");
 			},
 		});
 
@@ -109,16 +110,17 @@ app.post(
 			name: "search_programs",
 			description: "Useful for information on university/college programs.",
 			func: async (input, runManager) => {
-				const docs = await programsRetriever.getRelevantDocuments(
+				const docs = await programsRetriever.invoke(
 					input,
 					runManager?.getChild("retriever"),
 				);
-				return formatDocumentsAsString(docs, "\n");
+				return docs.map(doc => doc.pageContent).join("\n\n");
 			},
 		});
 
 		const agent = await initializeAgentExecutorWithOptions(
 			[programsRetrieverTool, coursesRetrieverTool],
+			// @ts-expect-error — eOPT
 			llm,
 			{
 				memory,
