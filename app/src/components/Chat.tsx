@@ -3,6 +3,7 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
 import { formatDistance } from "date-fns";
 import { FormEvent, useReducer, useRef, useState } from "react";
+import Markdown from "react-markdown";
 import { Compass } from "../assets/Compass";
 import { cn } from "../lib/util";
 import ScrollableFeed from "../vendor/react-scrollable-feed";
@@ -18,14 +19,6 @@ interface ChatProps {
 	schoolName: string;
 	hidden?: boolean;
 }
-
-const formatMessage = (message: Message): Message => ({
-	...message,
-	text: message.text.replace(/\r\n|\r|\n/g, "<br />").replace(
-		/\[(?<text>.+?)\]\((?<link>.+?)\)/g,
-		`<a href="$<link>" class="underline hover:text-sienna">$<text></a>`,
-	),
-});
 
 const MessagesPlaceholder = () => {
 	return (
@@ -173,7 +166,7 @@ export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 					) {
 						for (const message of [lastMessage, action.message]) {
 							if (!message.text.length || message.error) {
-								return state.slice(0, -1).concat(formatMessage(action.message));
+								return state.slice(0, -1).concat(action.message);
 							}
 						}
 					}
@@ -185,11 +178,9 @@ export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 						state.push(lastMessage);
 					}
 					const newText = lastMessage.text + action.token;
-					return state.slice(0, -1).concat(
-						formatMessage({ ...lastMessage, text: newText }),
-					);
+					return state.slice(0, -1).concat({ ...lastMessage, text: newText });
 				case "set":
-					return state.slice(0, -1).concat(formatMessage(action.message));
+					return state.slice(0, -1).concat(action.message);
 				default:
 					return state;
 			}
@@ -245,8 +236,8 @@ export function Chat({ sessionId, schoolName, hidden = false }: ChatProps) {
 								"error" in message && message.error
 									&& "text-red-400 dark:text-red-200",
 							)}
-							dangerouslySetInnerHTML={{ __html: message.text || llmStatus }}
 						>
+							<Markdown>{message.text || llmStatus}</Markdown>
 						</span>
 					</Transition>
 				))}
