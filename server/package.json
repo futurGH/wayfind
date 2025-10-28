@@ -4,6 +4,7 @@
 	"type": "module",
 	"dependencies": {
 		"@cloudflare/ai": "^1.0.22",
+		"@hono-rate-limiter/cloudflare": "^0.2.2",
 		"@langchain/cloudflare": "^1.0.0",
 		"@langchain/community": "^0.3.57",
 		"@langchain/core": "^0.3.57",
@@ -11,10 +12,12 @@
 		"@sinclair/typebox": "^0.31.17",
 		"@xata.io/client": "^0.26.9",
 		"hono": "^4.10.3",
-		"langchain": "^0.3.36"
+		"hono-rate-limiter": "^0.4.2",
+		"langchain": "^0.3.36",
+		"zod": "^4.1.12"
 	},
 	"devDependencies": {
-		"@cloudflare/workers-types": "^4.20240117.0",
-		"wrangler": "^4.45.0"
+		"@cloudflare/workers-types": "^4.20251014.0",
+		"wrangler": "^4.45.1"
 	}
 }
